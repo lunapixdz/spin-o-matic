@@ -18,6 +18,15 @@ const Index = () => {
     setWinner(winner);
   };
 
+  const handleRemoveWinner = () => {
+    if (winner) {
+      const winnerIndex = names.indexOf(winner);
+      if (winnerIndex !== -1) {
+        handleRemoveName(winnerIndex);
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
@@ -49,7 +58,11 @@ const Index = () => {
             </div>
           </div>
         </div>
-        <WinnerDialog winner={winner} onClose={() => setWinner(null)} />
+        <WinnerDialog 
+          winner={winner} 
+          onClose={() => setWinner(null)} 
+          onRemove={handleRemoveWinner}
+        />
       </div>
     </div>
   );

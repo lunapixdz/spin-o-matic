@@ -4,14 +4,17 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 interface WinnerDialogProps {
   winner: string | null;
   onClose: () => void;
+  onRemove: () => void;
 }
 
-const WinnerDialog: React.FC<WinnerDialogProps> = ({ winner, onClose }) => {
+const WinnerDialog: React.FC<WinnerDialogProps> = ({ winner, onClose, onRemove }) => {
   useEffect(() => {
     if (winner) {
       createConfetti();
@@ -48,6 +51,11 @@ const WinnerDialog: React.FC<WinnerDialogProps> = ({ winner, onClose }) => {
     }, 3000);
   };
 
+  const handleRemove = () => {
+    onRemove();
+    onClose();
+  };
+
   return (
     <Dialog open={!!winner} onOpenChange={() => onClose()}>
       <DialogContent className="sm:max-w-md">
@@ -61,6 +69,11 @@ const WinnerDialog: React.FC<WinnerDialogProps> = ({ winner, onClose }) => {
             {winner}
           </p>
         </div>
+        <DialogFooter>
+          <Button variant="destructive" onClick={handleRemove}>
+            Remove Winner
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

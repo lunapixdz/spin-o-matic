@@ -111,7 +111,7 @@ const WheelOfNames: React.FC<WheelProps> = ({
 
   return (
     <div className="relative w-full aspect-square max-w-xl mx-auto">
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-primary transform translate-x-1/2 rotate-45 z-10" />
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-white transform translate-x-1/2 rotate-45 z-10 shadow-lg" />
       
       <div
         ref={wheelRef}
@@ -135,7 +135,7 @@ const WheelOfNames: React.FC<WheelProps> = ({
           return (
             <div
               key={i}
-              className="absolute w-full h-full flex items-center justify-center text-white font-bold transform-gpu"
+              className="absolute w-[85%] h-[85%] left-[7.5%] top-[7.5%] flex items-center justify-center text-white font-bold transform-gpu"
               style={{
                 transform: `rotate(${segmentMiddle}deg)`,
               }}
