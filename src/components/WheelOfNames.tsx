@@ -59,11 +59,20 @@ const WheelOfNames: React.FC<WheelProps> = ({
 
     setIsSpinning(true);
     const spinDuration = 5000;
-    const spinRotations = 5;
+    const spinRotations = Math.floor(Math.random() * 3) + 5; // Random number of full rotations (5-7)
     const baseAngle = 360 * spinRotations;
     const winningIndex = Math.floor(Math.random() * names.length);
     const segmentAngle = 360 / names.length;
-    const targetAngle = baseAngle + (360 - (winningIndex * segmentAngle));
+    
+    // Calculate the center of the winning segment
+    const segmentCenter = winningIndex * segmentAngle;
+    
+    // Add a random offset within the segment (avoiding edges)
+    const safeZone = segmentAngle * 0.3; // 30% of segment width as safe zone
+    const randomOffset = (Math.random() * (segmentAngle - safeZone * 2)) + safeZone;
+    
+    // Calculate final angle ensuring we don't land on segment edges
+    const targetAngle = baseAngle + (360 - (segmentCenter + randomOffset));
 
     if (wheelRef.current) {
       wheelRef.current.style.setProperty("--spin-to", `${targetAngle}deg`);
