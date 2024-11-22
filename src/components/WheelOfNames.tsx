@@ -118,6 +118,9 @@ const WheelOfNames: React.FC<WheelProps> = ({
     );
   }
 
+  const segments = names.length > 0 ? names.length : 6;
+  const displayNames = names.length > 0 ? names : Array(6).fill("");
+
   return (
     <div className="relative w-full aspect-square max-w-xl mx-auto">
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-white transform translate-x-1/2 rotate-45 z-10 shadow-lg" />
@@ -125,22 +128,23 @@ const WheelOfNames: React.FC<WheelProps> = ({
       <div
         ref={wheelRef}
         className={`w-full h-full rounded-full relative ${
-          isSpinning ? "animate-spin-wheel" : ""
+          isSpinning ? "animate-spin-wheel" : "animate-spin-slow"
         }`}
         style={{
-          background: `conic-gradient(from 0deg, ${names
+          background: `conic-gradient(from 0deg, ${Array(segments)
+            .fill(null)
             .map(
               (_, i) =>
                 `${WHEEL_COLORS[i % WHEEL_COLORS.length]} ${
-                  (i * 360) / names.length
-                }deg ${((i + 1) * 360) / names.length}deg`
+                  (i * 360) / segments
+                }deg ${((i + 1) * 360) / segments}deg`
             )
             .join(", ")})`,
         }}
       >
-        {names.map((name, i) => {
-          const angle = (i * 360) / names.length;
-          const segmentMiddle = angle + (360 / names.length / 2);
+        {displayNames.map((name, i) => {
+          const angle = (i * 360) / segments;
+          const segmentMiddle = angle + (360 / segments / 2);
           return (
             <div
               key={i}
@@ -159,7 +163,7 @@ const WheelOfNames: React.FC<WheelProps> = ({
 
       <Button
         onClick={handleSpin}
-        disabled={isSpinning}
+        disabled={isSpinning || names.length < 2}
         size="lg"
         className="absolute left-1/2 -translate-x-1/2 bottom-[-60px] w-full max-w-xs"
       >

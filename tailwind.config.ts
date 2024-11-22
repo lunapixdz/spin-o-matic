@@ -50,6 +50,10 @@ export default {
           from: { transform: "rotate(0deg)" },
           to: { transform: "rotate(var(--spin-to))" },
         },
+        "spin-slow": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
         confetti: {
           "0%": { transform: "translateY(0) rotateX(0) rotateY(0)" },
           "100%": { transform: "translateY(100vh) rotateX(360deg) rotateY(360deg)" },
@@ -59,6 +63,7 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "spin-wheel": "spin var(--spin-duration) cubic-bezier(0.32, 0.94, 0.60, 1) forwards",
+        "spin-slow": "spin-slow 10s linear infinite",
         "confetti-fall": "confetti 3s ease-in-out forwards",
       },
     },
