@@ -63,7 +63,7 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "spin-wheel": "spin var(--spin-duration) cubic-bezier(0.32, 0.94, 0.60, 1) forwards",
-        "spin-slow": "spin-slow 10s linear infinite",
+        "spin-slow": "spin-slow 20s linear infinite", // Changed from 10s to 20s
         "confetti-fall": "confetti 3s ease-in-out forwards",
       },
     },

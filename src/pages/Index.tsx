@@ -2,11 +2,23 @@ import { useState } from "react";
 import WheelOfNames from "@/components/WheelOfNames";
 import WinnerDialog from "@/components/WinnerDialog";
 import { Settings, Maximize } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [names, setNames] = useState<string[]>([]);
   const [winner, setWinner] = useState<string | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [winners, setWinners] = useState<string[]>([]);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [winnerMessage, setWinnerMessage] = useState("We Have a Winner!");
 
   const handleAddName = (name: string) => {
     setNames((prev) => [...prev, name]);
@@ -18,6 +30,7 @@ const Index = () => {
 
   const handleSpin = (winner: string) => {
     setWinner(winner);
+    setWinners((prev) => [winner, ...prev]);
   };
 
   const handleRemoveWinner = () => {
@@ -47,7 +60,7 @@ const Index = () => {
         </h1>
         <div className="flex gap-4">
           <button
-            onClick={() => {}}
+            onClick={() => setIsSettingsOpen(true)}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
           >
             <Settings className="w-6 h-6 text-gray-600" />
@@ -74,7 +87,7 @@ const Index = () => {
               />
             </div>
           </div>
-          <div className="w-full md:w-2/3">
+          <div className="w-full md:w-1/3">
             <div className="bg-white rounded-lg shadow-md p-4">
               <div className="relative">
                 <WheelOfNames
@@ -83,6 +96,7 @@ const Index = () => {
                   onAddName={handleAddName}
                   onRemoveName={handleRemoveName}
                   displayMode="wheel"
+                  winners={winners}
                 />
                 {names.length === 0 && (
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -94,12 +108,56 @@ const Index = () => {
               </div>
             </div>
           </div>
+          <div className="w-full md:w-1/3">
+            <h2 className="text-2xl font-semibold mb-4">Results</h2>
+            <div className="bg-white rounded-lg shadow-md p-4">
+              <div className="space-y-2">
+                {winners.map((winner, index) => (
+                  <div
+                    key={index}
+                    className="p-2 bg-gray-50 rounded flex items-center justify-between"
+                  >
+                    <span>
+                      <span className="font-semibold mr-2">#{index + 1}</span>
+                      {winner}
+                    </span>
+                  </div>
+                ))}
+                {winners.length === 0 && (
+                  <p className="text-gray-400 text-center py-4">
+                    No winners yet
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
         <WinnerDialog 
-          winner={winner} 
-          onClose={() => setWinner(null)} 
+          winner={winner}
+          winnerMessage={winnerMessage}
+          onClose={() => setWinner(null)}
           onRemove={handleRemoveWinner}
         />
+        <Dialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Settings</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Winner Message</label>
+                <Input
+                  value={winnerMessage}
+                  onChange={(e) => setWinnerMessage(e.target.value)}
+                  placeholder="Enter winner message"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button onClick={() => setIsSettingsOpen(false)}>Close</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

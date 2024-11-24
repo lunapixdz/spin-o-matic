@@ -10,11 +10,17 @@ import { Button } from "@/components/ui/button";
 
 interface WinnerDialogProps {
   winner: string | null;
+  winnerMessage: string;
   onClose: () => void;
   onRemove: () => void;
 }
 
-const WinnerDialog: React.FC<WinnerDialogProps> = ({ winner, onClose, onRemove }) => {
+const WinnerDialog: React.FC<WinnerDialogProps> = ({
+  winner,
+  winnerMessage,
+  onClose,
+  onRemove,
+}) => {
   useEffect(() => {
     if (winner) {
       createConfetti();
@@ -61,7 +67,7 @@ const WinnerDialog: React.FC<WinnerDialogProps> = ({ winner, onClose, onRemove }
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-2xl text-center">
-            🎉 We Have a Winner! 🎉
+            🎉 {winnerMessage} 🎉
           </DialogTitle>
         </DialogHeader>
         <div className="text-center py-4">
