@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { X } from "lucide-react";
+import { X, ArrowUpAZ, Shuffle } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 interface WheelProps {
@@ -14,12 +14,12 @@ interface WheelProps {
 }
 
 const WHEEL_COLORS = [
-  "#8B5CF6", // Primary Purple
-  "#EC4899", // Pink
-  "#3B82F6", // Blue
-  "#10B981", // Green
-  "#F59E0B", // Yellow
-  "#EF4444", // Red
+  "#8B5CF6",
+  "#EC4899",
+  "#3B82F6",
+  "#10B981",
+  "#F59E0B",
+  "#EF4444",
 ];
 
 const WheelOfNames: React.FC<WheelProps> = ({
@@ -65,8 +65,6 @@ const WheelOfNames: React.FC<WheelProps> = ({
     const baseAngle = 360 * spinRotations;
     const winningIndex = Math.floor(Math.random() * names.length);
     const segmentAngle = 360 / names.length;
-    
-    // Calculate the final angle so the winning segment stops at the arrow
     const targetAngle = baseAngle + (360 - (winningIndex * segmentAngle));
 
     if (wheelRef.current) {
@@ -78,6 +76,18 @@ const WheelOfNames: React.FC<WheelProps> = ({
       setIsSpinning(false);
       onSpin(names[winningIndex]);
     }, spinDuration);
+  };
+
+  const handleSort = () => {
+    const sortedNames = [...names].sort((a, b) => a.localeCompare(b));
+    names.length = 0;
+    sortedNames.forEach((name) => onAddName(name));
+  };
+
+  const handleShuffle = () => {
+    const shuffledNames = [...names].sort(() => Math.random() - 0.5);
+    names.length = 0;
+    shuffledNames.forEach((name) => onAddName(name));
   };
 
   if (displayMode === "list") {
@@ -93,6 +103,26 @@ const WheelOfNames: React.FC<WheelProps> = ({
           />
           <Button type="submit">Add</Button>
         </form>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleSort}
+            className="flex items-center gap-2"
+          >
+            <ArrowUpAZ size={16} />
+            AZ
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleShuffle}
+            className="flex items-center gap-2"
+          >
+            <Shuffle size={16} />
+            Shuffle
+          </Button>
+        </div>
         <div className="space-y-2">
           {names.map((name, i) => (
             <div
