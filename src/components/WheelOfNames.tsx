@@ -63,14 +63,14 @@ const WheelOfNames: React.FC<WheelProps> = ({
     const baseAngle = 360 * spinRotations;
     const winningIndex = Math.floor(Math.random() * names.length);
     const segmentAngle = 360 / names.length;
-    
+
     // Calculate the center of the winning segment
     const segmentCenter = winningIndex * segmentAngle;
-    
+
     // Add a random offset within the segment (avoiding edges)
     const safeZone = segmentAngle * 0.3; // 30% of segment width as safe zone
     const randomOffset = (Math.random() * (segmentAngle - safeZone * 2)) + safeZone;
-    
+
     // Calculate final angle ensuring we don't land on segment edges
     const targetAngle = baseAngle + (360 - (segmentCenter + randomOffset));
 
@@ -104,7 +104,7 @@ const WheelOfNames: React.FC<WheelProps> = ({
               key={i}
               className="flex items-center justify-between p-2 bg-gray-50 rounded"
             >
-              <span>{name}</span>
+              <span><span className="font-semibold mr-2">#{i + 1}</span>{name}</span>
               <button
                 onClick={() => !isSpinning && onRemoveName(i)}
                 className="p-1 hover:text-red-400 transition-colors"
@@ -124,7 +124,7 @@ const WheelOfNames: React.FC<WheelProps> = ({
   return (
     <div className="relative w-full aspect-square max-w-xl mx-auto">
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-white transform translate-x-1/2 rotate-45 z-10 shadow-lg" />
-      
+
       <div
         ref={wheelRef}
         className={`w-full h-full rounded-full relative ${
@@ -165,9 +165,9 @@ const WheelOfNames: React.FC<WheelProps> = ({
         onClick={handleSpin}
         disabled={isSpinning || names.length < 2}
         size="lg"
-        className="absolute left-1/2 -translate-x-1/2 bottom-[-60px] w-full max-w-xs"
+        className="absolute left-1/2 -translate-x-1/2 bottom-[-60px] w-full max-w-xs rounded-full"
       >
-        {isSpinning ? "Spinning..." : "Spin the Wheel!"}
+        {isSpinning ? "Spinning..." : "SPIN"}
       </Button>
     </div>
   );
