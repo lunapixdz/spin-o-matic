@@ -36,7 +36,7 @@ const WinnerDialog: React.FC<WinnerDialogProps> = ({
     container.style.width = "100%";
     container.style.height = "100%";
     container.style.pointerEvents = "none";
-    container.style.zIndex = "50";
+    container.style.zIndex = "9999";
     document.body.appendChild(container);
 
     const colors = ["#8B5CF6", "#EC4899", "#3B82F6", "#10B981", "#F59E0B", "#EF4444"];
@@ -48,9 +48,8 @@ const WinnerDialog: React.FC<WinnerDialogProps> = ({
       const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
       const randomColor = colors[Math.floor(Math.random() * colors.length)];
       const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
-      const randomDelay = Math.random() * 0.5; // Random delay between 0 and 0.5 seconds
+      const randomDelay = Math.random() * 0.5;
 
-      confetti.className = `animate-${randomAnimation}`;
       confetti.style.position = "absolute";
       confetti.style.left = Math.random() * 100 + "%";
       confetti.style.top = "-20px";
@@ -58,13 +57,14 @@ const WinnerDialog: React.FC<WinnerDialogProps> = ({
       confetti.style.height = randomSize;
       confetti.style.backgroundColor = randomColor;
       confetti.style.borderRadius = Math.random() > 0.5 ? "50%" : "0";
+      confetti.style.animation = `${randomAnimation} ${2.5 + Math.random()}s ease-in-out forwards`;
       confetti.style.animationDelay = `${randomDelay}s`;
       container.appendChild(confetti);
     }
 
     setTimeout(() => {
       container.remove();
-    }, 4000); // Increased timeout to account for longer animations
+    }, 4000);
   };
 
   const handleRemove = () => {
