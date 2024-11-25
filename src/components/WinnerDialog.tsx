@@ -39,22 +39,32 @@ const WinnerDialog: React.FC<WinnerDialogProps> = ({
     container.style.zIndex = "50";
     document.body.appendChild(container);
 
+    const colors = ["#8B5CF6", "#EC4899", "#3B82F6", "#10B981", "#F59E0B", "#EF4444"];
+    const animations = ["confetti-fall-1", "confetti-fall-2", "confetti-fall-3"];
+    const sizes = ["8px", "10px", "12px", "14px"];
+
     for (let i = 0; i < confettiCount; i++) {
       const confetti = document.createElement("div");
-      confetti.className = "animate-confetti-fall";
+      const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+      const randomDelay = Math.random() * 0.5; // Random delay between 0 and 0.5 seconds
+
+      confetti.className = `animate-${randomAnimation}`;
       confetti.style.position = "absolute";
       confetti.style.left = Math.random() * 100 + "%";
       confetti.style.top = "-20px";
-      confetti.style.width = "10px";
-      confetti.style.height = "10px";
-      confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-      confetti.style.transform = "rotate(" + Math.random() * 360 + "deg)";
+      confetti.style.width = randomSize;
+      confetti.style.height = randomSize;
+      confetti.style.backgroundColor = randomColor;
+      confetti.style.borderRadius = Math.random() > 0.5 ? "50%" : "0";
+      confetti.style.animationDelay = `${randomDelay}s`;
       container.appendChild(confetti);
     }
 
     setTimeout(() => {
       container.remove();
-    }, 3000);
+    }, 4000); // Increased timeout to account for longer animations
   };
 
   const handleRemove = () => {

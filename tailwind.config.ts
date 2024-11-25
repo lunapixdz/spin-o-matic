@@ -54,17 +54,27 @@ export default {
           from: { transform: "rotate(0deg)" },
           to: { transform: "rotate(360deg)" },
         },
-        confetti: {
-          "0%": { transform: "translateY(0) rotateX(0) rotateY(0)" },
-          "100%": { transform: "translateY(100vh) rotateX(360deg) rotateY(360deg)" },
+        "confetti-1": {
+          "0%": { transform: "translateY(0) rotateX(0) rotateY(0) rotate(0)" },
+          "100%": { transform: "translateY(100vh) rotateX(720deg) rotateY(360deg) rotate(180deg)" },
+        },
+        "confetti-2": {
+          "0%": { transform: "translateY(0) rotateX(0) rotateY(0) rotate(0)" },
+          "100%": { transform: "translateY(100vh) rotateX(360deg) rotateY(720deg) rotate(-180deg)" },
+        },
+        "confetti-3": {
+          "0%": { transform: "translateY(0) rotateX(0) rotateY(0) rotate(0)" },
+          "100%": { transform: "translateY(100vh) rotateX(-360deg) rotateY(360deg) rotate(90deg)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "spin-wheel": "spin var(--spin-duration) cubic-bezier(0.32, 0.94, 0.60, 1) forwards",
-        "spin-slow": "spin-slow 20s linear infinite", // Changed from 10s to 20s
-        "confetti-fall": "confetti 3s ease-in-out forwards",
+        "spin-slow": "spin-slow 20s linear infinite",
+        "confetti-fall-1": "confetti-1 2.5s ease-in-out forwards",
+        "confetti-fall-2": "confetti-2 3s ease-in-out forwards",
+        "confetti-fall-3": "confetti-3 3.5s ease-in-out forwards",
       },
     },
   },
