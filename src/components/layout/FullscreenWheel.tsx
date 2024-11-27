@@ -21,7 +21,7 @@ const FullscreenWheel = ({
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-8">
       <div className="w-full max-w-3xl">
-        <div className="bg-white rounded-lg shadow-md p-4">
+        <div className="bg-gray-100 rounded-lg p-4">
           <div className="relative">
             <WheelOfNames
               names={names}
