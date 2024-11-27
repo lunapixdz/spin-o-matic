@@ -13,8 +13,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+const INITIAL_NAMES = [
+  "Emma Thompson",
+  "James Wilson",
+  "Sarah Parker",
+  "Michael Chen",
+  "Lisa Rodriguez",
+  "David Kim",
+];
+
 const Index = () => {
-  const [names, setNames] = useState<string[]>([]);
+  const [names, setNames] = useState<string[]>(INITIAL_NAMES);
   const [winner, setWinner] = useState<string | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [winners, setWinners] = useState<string[]>([]);
