@@ -1,5 +1,6 @@
 import { Maximize } from "lucide-react";
 import WheelOfNames from "../WheelOfNames";
+import WinnerDialog from "../WinnerDialog";
 
 interface FullscreenWheelProps {
   names: string[];
@@ -8,6 +9,10 @@ interface FullscreenWheelProps {
   onRemoveName: (index: number) => void;
   winners: string[];
   toggleFullscreen: () => void;
+  winner: string | null;
+  winnerMessage: string;
+  onCloseWinner: () => void;
+  onRemoveWinner: () => void;
 }
 
 const FullscreenWheel = ({
@@ -17,6 +22,10 @@ const FullscreenWheel = ({
   onRemoveName,
   winners,
   toggleFullscreen,
+  winner,
+  winnerMessage,
+  onCloseWinner,
+  onRemoveWinner,
 }: FullscreenWheelProps) => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-8">
@@ -47,6 +56,12 @@ const FullscreenWheel = ({
           <Maximize className="w-6 h-6 text-gray-600" />
         </button>
       </div>
+      <WinnerDialog
+        winner={winner}
+        winnerMessage={winnerMessage}
+        onClose={onCloseWinner}
+        onRemove={onRemoveWinner}
+      />
     </div>
   );
 };

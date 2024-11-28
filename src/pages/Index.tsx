@@ -71,6 +71,10 @@ const Index = () => {
         onRemoveName={handleRemoveName}
         winners={winners}
         toggleFullscreen={toggleFullscreen}
+        winner={winner}
+        winnerMessage={winnerMessage}
+        onCloseWinner={() => setWinner(null)}
+        onRemoveWinner={handleRemoveWinner}
       />
     );
   }
