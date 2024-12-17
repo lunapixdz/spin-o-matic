@@ -9,7 +9,16 @@ const Header = ({ toggleFullscreen, onOpenSettings }: HeaderProps) => {
   return (
     <div className="bg-white shadow-md py-4 px-8 flex justify-between items-center mb-8">
       <div className="flex items-center gap-4">
-        <img src="/logo.png" alt="Logo" className="h-10 w-10 object-contain" />
+        <img 
+          src="logo.png" 
+          alt="Wheel Logo" 
+          className="h-10 w-10 object-contain"
+          onError={(e) => {
+            console.error('Logo failed to load:', e);
+            const img = e.target as HTMLImageElement;
+            img.style.display = 'none';
+          }}
+        />
         <h1 className="text-4xl md:text-5xl font-bold text-primary">wheelspin.site</h1>
       </div>
       <div className="flex gap-4">
