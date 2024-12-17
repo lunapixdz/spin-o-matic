@@ -8,7 +8,10 @@ interface HeaderProps {
 const Header = ({ toggleFullscreen, onOpenSettings }: HeaderProps) => {
   return (
     <div className="bg-white shadow-md py-4 px-8 flex justify-between items-center mb-8">
-      <h1 className="text-4xl md:text-5xl font-bold text-primary">WHEEL SPIN</h1>
+      <div className="flex items-center gap-4">
+        <img src="/logo.png" alt="Logo" className="h-10 w-10" />
+        <h1 className="text-4xl md:text-5xl font-bold text-primary">SPIN-O-MATIC</h1>
+      </div>
       <div className="flex gap-4">
         <button
           onClick={onOpenSettings}
