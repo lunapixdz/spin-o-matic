@@ -160,7 +160,17 @@ const WheelOfNames: React.FC<WheelProps> = ({
 
   return (
     <div className="relative w-full aspect-square max-w-xl mx-auto">
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-gray-100 transform translate-x-1/2 rotate-45 z-10" />
+      {/* Arrow Image */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 z-20 w-16">
+        <img 
+          src="/arrow-pointer.png" 
+          alt="Pointer"
+          className="w-full h-auto transform -translate-y-1/2"
+          style={{
+            filter: 'drop-shadow(2px 2px 2px rgba(0,0,0,0.3))'
+          }}
+        />
+      </div>
 
       <div
         ref={wheelRef}
