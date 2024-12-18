@@ -161,9 +161,9 @@ const WheelOfNames: React.FC<WheelProps> = ({
   return (
     <div className="relative w-full aspect-square max-w-xl mx-auto">
       {/* Arrow Image */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 z-20 w-16">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 z-20 w-8">
         <img 
-          src={`${import.meta.env.BASE_URL}arrow-pointer.png`}
+          src={`${import.meta.env.BASE_URL}lovable-uploads/8c6f937b-4b30-44d8-b459-5461778b8349.png`}
           alt="Pointer"
           className="w-full h-auto transform -translate-y-1/2"
           style={{
