@@ -29,6 +29,7 @@ const Index = () => {
   const [winners, setWinners] = useState<string[]>([]);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [winnerMessage, setWinnerMessage] = useState("We Have a Winner!");
+  const [spinMode, setSpinMode] = useState<"selection" | "elimination">("selection");
 
   const handleAddName = (name: string) => {
     setNames((prev) => [...prev, name]);
@@ -38,9 +39,13 @@ const Index = () => {
     setNames((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handleSpin = (winner: string) => {
+  const handleSpin = (winner: string, mode: "selection" | "elimination") => {
+    setSpinMode(mode);
     setWinner(winner);
-    setWinners((prev) => [winner, ...prev]);
+    if (mode === "selection") {
+      setWinners((prev) => [winner, ...prev]);
+    }
+    setWinnerMessage(mode === "elimination" && names.length > 2 ? "Eliminated!" : "We Have a Winner!");
   };
 
   const handleRemoveWinner = () => {
@@ -110,17 +115,10 @@ const Index = () => {
                   displayMode="wheel"
                   winners={winners}
                 />
-                {names.length === 0 && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-2xl text-gray-400 font-semibold">
-                      Add Entries
-                    </span>
-                  </div>
-                )}
               </div>
             </div>
           </div>
-          <div className="w-full md:w-1/4">
+          <div className="w-full md:w-1/4 mt-16 md:mt-0">
             <h2 className="text-2xl font-semibold mb-4">Results</h2>
             <div className="bg-white rounded-lg shadow-md p-4">
               <div className="space-y-2">
@@ -143,7 +141,6 @@ const Index = () => {
           </div>
         </div>
 
-        {/* New section about WheelSpin use cases */}
         <div className="mt-16 mb-8">
           <h2 className="text-3xl font-bold text-center mb-12">What is WheelSpin for?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -223,7 +220,10 @@ const Index = () => {
         winnerMessage={winnerMessage}
         onClose={() => setWinner(null)}
         onRemove={handleRemoveWinner}
+        mode={spinMode}
+        remainingCount={names.length}
       />
+      
       <Dialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
         <DialogContent>
           <DialogHeader>

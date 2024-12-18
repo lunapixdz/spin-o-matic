@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { X, ArrowUpAZ, Shuffle } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import SpinMode from "./SpinMode";
 
 interface WheelProps {
   names: string[];
-  onSpin: (winner: string) => void;
+  onSpin: (winner: string, mode: "selection" | "elimination") => void;
   onAddName: (name: string) => void;
   onRemoveName: (index: number) => void;
   displayMode: "wheel" | "list";
@@ -32,6 +33,7 @@ const WheelOfNames: React.FC<WheelProps> = ({
 }) => {
   const [newName, setNewName] = useState("");
   const [isSpinning, setIsSpinning] = useState(false);
+  const [spinMode, setSpinMode] = useState<"selection" | "elimination">("selection");
   const wheelRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -46,6 +48,12 @@ const WheelOfNames: React.FC<WheelProps> = ({
     }
     onAddName(newName.trim());
     setNewName("");
+  };
+
+  const getNudgedAngle = (baseAngle: number): number => {
+    // Add a small random nudge to avoid landing exactly on segment boundaries
+    const nudge = Math.random() * 10 - 5; // Random value between -5 and 5 degrees
+    return baseAngle + nudge;
   };
 
   const handleSpin = () => {
@@ -65,7 +73,8 @@ const WheelOfNames: React.FC<WheelProps> = ({
     const baseAngle = 360 * spinRotations;
     const winningIndex = Math.floor(Math.random() * names.length);
     const segmentAngle = 360 / names.length;
-    const targetAngle = baseAngle + (360 - (winningIndex * segmentAngle));
+    // Adjust the target angle to align with the left tip of the arrow
+    const targetAngle = getNudgedAngle(baseAngle + (360 - ((winningIndex * segmentAngle) + (segmentAngle / 2))));
 
     if (wheelRef.current) {
       wheelRef.current.style.setProperty("--spin-to", `${targetAngle}deg`);
@@ -74,7 +83,7 @@ const WheelOfNames: React.FC<WheelProps> = ({
 
     setTimeout(() => {
       setIsSpinning(false);
-      onSpin(names[winningIndex]);
+      onSpin(names[winningIndex], spinMode);
     }, spinDuration);
   };
 
@@ -170,7 +179,6 @@ const WheelOfNames: React.FC<WheelProps> = ({
             .join(", ")})`,
         }}
       >
-        {/* Center white disc */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1/4 h-1/4 bg-gray-100 rounded-full z-10" />
         
         {displayNames.map((name, i) => {
@@ -192,14 +200,17 @@ const WheelOfNames: React.FC<WheelProps> = ({
         })}
       </div>
 
-      <Button
-        onClick={handleSpin}
-        disabled={isSpinning || names.length < 2}
-        size="lg"
-        className="absolute left-1/2 -translate-x-1/2 bottom-[-60px] w-full max-w-xs rounded-full"
-      >
-        {isSpinning ? "Spinning..." : "SPIN"}
-      </Button>
+      <div className="flex flex-col gap-4 mt-8">
+        <SpinMode mode={spinMode} onChange={setSpinMode} />
+        <Button
+          onClick={handleSpin}
+          disabled={isSpinning || names.length < 2}
+          size="lg"
+          className="w-full max-w-xs mx-auto rounded-full"
+        >
+          {isSpinning ? "Spinning..." : "SPIN"}
+        </Button>
+      </div>
     </div>
   );
 };

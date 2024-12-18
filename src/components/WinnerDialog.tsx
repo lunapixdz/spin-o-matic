@@ -5,6 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
@@ -13,6 +14,8 @@ interface WinnerDialogProps {
   winnerMessage: string;
   onClose: () => void;
   onRemove: () => void;
+  mode: "selection" | "elimination";
+  remainingCount?: number;
 }
 
 const WinnerDialog: React.FC<WinnerDialogProps> = ({
@@ -20,12 +23,14 @@ const WinnerDialog: React.FC<WinnerDialogProps> = ({
   winnerMessage,
   onClose,
   onRemove,
+  mode,
+  remainingCount = 0,
 }) => {
   useEffect(() => {
-    if (winner) {
+    if (winner && mode === "selection") {
       createConfetti();
     }
-  }, [winner]);
+  }, [winner, mode]);
 
   const createConfetti = () => {
     const confettiCount = 100;
@@ -72,22 +77,29 @@ const WinnerDialog: React.FC<WinnerDialogProps> = ({
     onClose();
   };
 
+  const isLastElimination = mode === "elimination" && remainingCount === 2;
+
   return (
     <Dialog open={!!winner} onOpenChange={() => onClose()}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-2xl text-center">
-            🎉 {winnerMessage} 🎉
+          <DialogTitle className={`text-2xl text-center ${mode === "elimination" && !isLastElimination ? "text-red-500" : ""}`}>
+            {isLastElimination ? "🎉 We Have a Winner! 🎉" : winnerMessage}
           </DialogTitle>
+          {mode === "elimination" && !isLastElimination && (
+            <DialogDescription className="text-center">
+              This participant has been eliminated
+            </DialogDescription>
+          )}
         </DialogHeader>
         <div className="text-center py-4">
-          <p className="text-4xl font-bold text-primary animate-bounce">
+          <p className={`text-4xl font-bold ${mode === "elimination" && !isLastElimination ? "text-red-500" : "text-primary animate-bounce"}`}>
             {winner}
           </p>
         </div>
         <DialogFooter>
           <Button variant="destructive" onClick={handleRemove}>
-            Remove Winner
+            {mode === "elimination" && !isLastElimination ? "Remove" : "Remove Winner"}
           </Button>
         </DialogFooter>
       </DialogContent>
