@@ -4,7 +4,7 @@ import WinnerDialog from "../WinnerDialog";
 
 interface FullscreenWheelProps {
   names: string[];
-  onSpin: (winner: string) => void;
+  onSpin: (winner: string, mode: "selection" | "elimination") => void;
   onAddName: (name: string) => void;
   onRemoveName: (index: number) => void;
   winners: string[];
@@ -61,6 +61,8 @@ const FullscreenWheel = ({
         winnerMessage={winnerMessage}
         onClose={onCloseWinner}
         onRemove={onRemoveWinner}
+        mode="selection"
+        remainingCount={names.length}
       />
     </div>
   );
