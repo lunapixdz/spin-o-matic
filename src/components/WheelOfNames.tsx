@@ -51,7 +51,6 @@ const WheelOfNames: React.FC<WheelProps> = ({
   };
 
   const getNudgedAngle = (baseAngle: number): number => {
-    // Add a small random nudge to avoid landing exactly on segment boundaries
     const nudge = Math.random() * 10 - 5; // Random value between -5 and 5 degrees
     return baseAngle + nudge;
   };
@@ -73,7 +72,6 @@ const WheelOfNames: React.FC<WheelProps> = ({
     const baseAngle = 360 * spinRotations;
     const winningIndex = Math.floor(Math.random() * names.length);
     const segmentAngle = 360 / names.length;
-    // Adjust the target angle to align with the left tip of the arrow
     const targetAngle = getNudgedAngle(baseAngle + (360 - ((winningIndex * segmentAngle) + (segmentAngle / 2))));
 
     if (wheelRef.current) {
@@ -165,9 +163,10 @@ const WheelOfNames: React.FC<WheelProps> = ({
         <img 
           src={`${import.meta.env.BASE_URL}lovable-uploads/8c6f937b-4b30-44d8-b459-5461778b8349.png`}
           alt="Pointer"
-          className="w-full h-auto transform -translate-y-1/2"
+          className="w-full h-auto"
           style={{
-            filter: 'drop-shadow(2px 2px 2px rgba(0,0,0,0.3))'
+            filter: 'drop-shadow(2px 2px 2px rgba(0,0,0,0.3))',
+            transform: 'translateY(-100%)'
           }}
         />
       </div>
