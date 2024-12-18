@@ -163,7 +163,7 @@ const WheelOfNames: React.FC<WheelProps> = ({
       {/* Arrow Image */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 z-20 w-16">
         <img 
-          src="/arrow-pointer.png" 
+          src={`${import.meta.env.BASE_URL}arrow-pointer.png`}
           alt="Pointer"
           className="w-full h-auto transform -translate-y-1/2"
           style={{
