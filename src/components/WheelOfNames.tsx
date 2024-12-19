@@ -159,14 +159,14 @@ const WheelOfNames: React.FC<WheelProps> = ({
   return (
     <div className="relative w-full aspect-square max-w-xl mx-auto">
       {/* Arrow Image */}
-      <div className="absolute left-1/2 -translate-x-1/2 z-20 w-8" style={{ bottom: '50%' }}>
+      <div className="absolute left-1/2 -translate-x-1/2 z-20 w-8" style={{ top: '25%' }}>
         <img 
           src={`${import.meta.env.BASE_URL}lovable-uploads/8c6f937b-4b30-44d8-b459-5461778b8349.png`}
           alt="Pointer"
           className="w-full h-auto"
           style={{
             filter: 'drop-shadow(2px 2px 2px rgba(0,0,0,0.3))',
-            transform: 'translateY(50%)'
+            transform: 'translateY(-50%)'
           }}
         />
       </div>
