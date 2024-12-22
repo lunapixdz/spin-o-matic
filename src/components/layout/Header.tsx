@@ -10,7 +10,7 @@ const Header = ({ toggleFullscreen, onOpenSettings }: HeaderProps) => {
     <div className="bg-[#9b87f5] shadow-md py-4 px-8 flex justify-between items-center mb-8">
       <div className="flex items-center gap-4">
         <img 
-          src="/lovable-uploads/e043dd8f-6f23-4214-a9b6-f30c8c1a809f.png" 
+          src="/lovable-uploads/df6127cc-c100-4aec-b439-d7cd7492f6fd.png" 
           alt="Wheel Logo" 
           className="h-10 w-auto object-contain"
           onError={(e) => {
