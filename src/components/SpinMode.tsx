@@ -14,7 +14,7 @@ const SpinMode = ({ mode, onChange }: SpinModeProps) => {
       <Toggle
         pressed={mode === "elimination"}
         onPressedChange={(pressed) => onChange(pressed ? "elimination" : "selection")}
-        className="data-[state=on]:bg-primary"
+        className="data-[state=on]:bg-primary data-[state=on]:border-primary border-2 border-gray-200 w-[52px] h-[28px]"
       />
       <span className={`text-sm ${mode === 'elimination' ? 'text-primary font-medium' : 'text-gray-500'}`}>
         Elimination
