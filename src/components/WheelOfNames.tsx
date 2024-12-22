@@ -161,7 +161,7 @@ const WheelOfNames: React.FC<WheelProps> = ({
       {/* Arrow Image */}
       <div className="absolute left-1/2 -translate-x-1/2 z-20 w-8" style={{ top: 'calc(25% + 15px)' }}>
         <img 
-          src={`${import.meta.env.BASE_URL}lovable-uploads/8c6f937b-4b30-44d8-b459-5461778b8349.png`}
+          src="/lovable-uploads/8c6f937b-4b30-44d8-b459-5461778b8349.png"
           alt="Pointer"
           className="w-full h-auto"
           style={{
