@@ -1,5 +1,4 @@
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
+import { Toggle } from "@/components/ui/toggle";
 
 interface SpinModeProps {
   mode: "selection" | "elimination";
@@ -8,20 +7,19 @@ interface SpinModeProps {
 
 const SpinMode = ({ mode, onChange }: SpinModeProps) => {
   return (
-    <RadioGroup
-      value={mode}
-      onValueChange={(value: "selection" | "elimination") => onChange(value)}
-      className="flex gap-4"
-    >
-      <div className="flex items-center space-x-2">
-        <RadioGroupItem value="selection" id="selection" />
-        <Label htmlFor="selection">Selection</Label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <RadioGroupItem value="elimination" id="elimination" />
-        <Label htmlFor="elimination">Elimination</Label>
-      </div>
-    </RadioGroup>
+    <div className="flex items-center justify-center gap-4">
+      <span className={`text-sm ${mode === 'selection' ? 'text-primary font-medium' : 'text-gray-500'}`}>
+        Selection
+      </span>
+      <Toggle
+        pressed={mode === "elimination"}
+        onPressedChange={(pressed) => onChange(pressed ? "elimination" : "selection")}
+        className="data-[state=on]:bg-primary"
+      />
+      <span className={`text-sm ${mode === 'elimination' ? 'text-primary font-medium' : 'text-gray-500'}`}>
+        Elimination
+      </span>
+    </div>
   );
 };
 
