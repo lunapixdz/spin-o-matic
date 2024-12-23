@@ -23,12 +23,14 @@ const SpinCounter = () => {
       }
     },
     retry: 3,
-    onError: () => {
-      toast({
-        title: "Unable to load global spin count",
-        description: "Please try again later",
-        variant: "destructive",
-      });
+    meta: {
+      onError: () => {
+        toast({
+          title: "Unable to load global spin count",
+          description: "Please try again later",
+          variant: "destructive",
+        });
+      },
     },
   });
 
