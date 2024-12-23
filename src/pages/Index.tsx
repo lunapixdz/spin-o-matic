@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WheelOfNames from "@/components/WheelOfNames";
 import WinnerDialog from "@/components/WinnerDialog";
 import Header from "@/components/layout/Header";
@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ContactForm from "@/components/ContactForm";
+import SpinCounter from "@/components/SpinCounter";
 
 const INITIAL_NAMES = [
   "Emma Thompson",
@@ -47,6 +48,14 @@ const Index = () => {
       setWinners((prev) => [winner, ...prev]);
     }
     setWinnerMessage(mode === "elimination" && names.length > 2 ? "Eliminated!" : "We Have a Winner!");
+    
+    // Update local spin count
+    const currentCount = parseInt(localStorage.getItem('wheelspinCount') || '0');
+    localStorage.setItem('wheelspinCount', (currentCount + 1).toString());
+    
+    // Force a re-render of SpinCounter
+    const event = new Event('storage');
+    window.dispatchEvent(event);
   };
 
   const handleRemoveWinner = () => {
@@ -216,6 +225,8 @@ const Index = () => {
         </div>
       </div>
 
+      <SpinCounter />
+      
       <WinnerDialog
         winner={winner}
         winnerMessage={winnerMessage}
