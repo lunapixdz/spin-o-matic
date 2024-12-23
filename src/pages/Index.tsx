@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import ContactForm from "@/components/ContactForm";
 
 const INITIAL_NAMES = [
   "Emma Thompson",
@@ -244,6 +245,17 @@ const Index = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* New Contact Section */}
+      <div className="bg-white py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-8">Contact Us</h2>
+          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+            Have questions or suggestions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+          </p>
+          <ContactForm />
+        </div>
+      </div>
     </div>
   );
 };
