@@ -29,7 +29,7 @@ const SpinMode = ({ mode, onChange }: SpinModeProps) => {
       >
         Elimination
       </span>
-      <style jsx>{`
+      <style>{`
         .switch {
           --false: #009068;
           --true: #E81B1B;
@@ -49,12 +49,12 @@ const SpinMode = ({ mode, onChange }: SpinModeProps) => {
         input[type=checkbox]::before {
           content: '';
           display: block;
-          height: 1.9em;
-          width: 1.9em;
-          transform: translate(-50%, -50%);
+          height: 1.8em;
+          width: 1.8em;
+          transform: translate(0, -50%);
           position: absolute;
           top: 50%;
-          left: calc(1.9em/2 + .3em);
+          left: 0.1em;
           background-color: var(--false);
           border-radius: 1em;
           transition: .3s ease;
@@ -62,7 +62,7 @@ const SpinMode = ({ mode, onChange }: SpinModeProps) => {
         
         input[type=checkbox]:checked::before {
           background-color: var(--true);
-          left: calc(100% - (1.9em/2 + .3em));
+          left: calc(100% - 1.9em);
         }
       `}</style>
     </div>
