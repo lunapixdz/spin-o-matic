@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import WheelOfNames from "@/components/WheelOfNames";
+import { useState } from "react";
 import WinnerDialog from "@/components/WinnerDialog";
 import Header from "@/components/layout/Header";
 import FullscreenWheel from "@/components/layout/FullscreenWheel";
@@ -14,6 +13,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ContactForm from "@/components/ContactForm";
 import SpinCounter from "@/components/SpinCounter";
+import MainContent from "@/components/layout/MainContent";
+import UseCaseGrid from "@/components/layout/UseCaseGrid";
+import ElfsightWidget from "@/components/layout/ElfsightWidget";
 
 const INITIAL_NAMES = [
   "Emma Thompson",
@@ -49,11 +51,9 @@ const Index = () => {
     }
     setWinnerMessage(mode === "elimination" && names.length > 2 ? "Eliminated!" : "We Have a Winner!");
     
-    // Update local spin count
     const currentCount = parseInt(localStorage.getItem('wheelspinCount') || '0');
     localStorage.setItem('wheelspinCount', (currentCount + 1).toString());
     
-    // Force a re-render of SpinCounter
     const event = new Event('storage');
     window.dispatchEvent(event);
   };
@@ -101,128 +101,14 @@ const Index = () => {
         onOpenSettings={() => setIsSettingsOpen(true)}
       />
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-col md:flex-row gap-8">
-          <div className="w-full md:w-1/4">
-            <h2 className="text-2xl font-semibold mb-4">Entries</h2>
-            <div className="bg-white rounded-lg shadow-md p-4">
-              <WheelOfNames
-                names={names}
-                onSpin={handleSpin}
-                onAddName={handleAddName}
-                onRemoveName={handleRemoveName}
-                displayMode="list"
-              />
-            </div>
-          </div>
-          <div className="w-full md:w-2/4">
-            <div className="bg-white rounded-lg shadow-md p-4">
-              <div className="relative">
-                <WheelOfNames
-                  names={names}
-                  onSpin={handleSpin}
-                  onAddName={handleAddName}
-                  onRemoveName={handleRemoveName}
-                  displayMode="wheel"
-                  winners={winners}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="w-full md:w-1/4 mt-16 md:mt-0">
-            <h2 className="text-2xl font-semibold mb-4">Results</h2>
-            <div className="bg-white rounded-lg shadow-md p-4">
-              <div className="space-y-2">
-                {winners.map((winner, index) => (
-                  <div
-                    key={index}
-                    className="p-2 bg-gray-50 rounded flex items-center justify-between"
-                  >
-                    <span>
-                      <span className="font-semibold mr-2">#{index + 1}</span>
-                      {winner}
-                    </span>
-                  </div>
-                ))}
-                {winners.length === 0 && (
-                  <p className="text-gray-400 text-center py-4">No winners yet</p>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-16 mb-8">
-          <h2 className="text-3xl font-bold text-center mb-12">What is WheelSpin for?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                title: "YouTube Giveaways",
-                description: "Use a wheel spin to select winners from commenters or subscribers during live streams or giveaway events."
-              },
-              {
-                title: "Twitch or Live Streaming Engagement",
-                description: "Create a wheel of fun challenges or rewards that viewers can spin by donating or redeeming channel points."
-              },
-              {
-                title: "Social Media Engagement",
-                description: "Run contests where followers spin a wheel to determine their prize or a special shoutout."
-              },
-              {
-                title: "Content Brainstorming",
-                description: "Use a wheel to randomly pick video topics, challenges, or games for YouTubers and streamers."
-              },
-              {
-                title: "Gaming Streams",
-                description: "Use a wheel to determine in-game challenges, character selection, or random actions during a live gaming session."
-              },
-              {
-                title: "Trivia or Quiz Games",
-                description: "Add excitement to online quizzes by spinning the wheel to choose a random question or category."
-              },
-              {
-                title: "Online Workshops or Webinars",
-                description: "Use the wheel to pick a lucky attendee for prizes, free consultation, or exclusive resources."
-              },
-              {
-                title: "Virtual Classrooms",
-                description: "Randomly select which student will answer, present, or lead an activity during online classes."
-              },
-              {
-                title: "Team Collaboration Tools",
-                description: "Use the wheel to assign random tasks or choose topics for group discussions during virtual meetings."
-              },
-              {
-                title: "Content Creators",
-                description: "Decide which type of video, reel, or post to create next when undecided."
-              },
-              {
-                title: "Fan Challenges",
-                description: "Allow fans to submit challenges and spin the wheel live to pick the next challenge to complete."
-              },
-              {
-                title: "Online Productivity Games",
-                description: "Gamify task prioritization by spinning the wheel to decide what to work on next."
-              },
-              {
-                title: "Event Organizers",
-                description: "During virtual events, spin the wheel to select winners or topics to keep attendees engaged."
-              },
-              {
-                title: "Online Dating or Icebreakers",
-                description: "Use a wheel during virtual speed dating or team-building events to decide discussion topics."
-              },
-              {
-                title: "E-Commerce or Online Stores",
-                description: "Offer shoppers a chance to spin the wheel for discounts, freebies, or exclusive deals."
-              }
-            ].map((useCase, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-3 text-primary">{useCase.title}</h3>
-                <p className="text-gray-600">{useCase.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <MainContent
+          names={names}
+          onSpin={handleSpin}
+          onAddName={handleAddName}
+          onRemoveName={handleRemoveName}
+          winners={winners}
+        />
+        <UseCaseGrid />
       </div>
 
       <SpinCounter />
@@ -257,7 +143,6 @@ const Index = () => {
         </DialogContent>
       </Dialog>
 
-      {/* New Contact Section */}
       <div className="bg-white py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-8">Contact Us</h2>
@@ -267,6 +152,8 @@ const Index = () => {
           <ContactForm />
         </div>
       </div>
+
+      <ElfsightWidget />
     </div>
   );
 };
