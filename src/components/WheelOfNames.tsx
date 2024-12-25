@@ -196,12 +196,12 @@ const WheelOfNames: React.FC<WheelProps> = ({
           return (
             <div
               key={i}
-              className="absolute w-[85%] h-[85%] left-[7.5%] top-[7.5%] flex items-center justify-center text-white font-bold transform-gpu"
+              className="absolute w-[80%] h-[80%] left-[10%] top-[10%] flex items-center justify-center text-white font-bold transform-gpu"
               style={{
                 transform: `rotate(${segmentMiddle}deg)`,
               }}
             >
-              <div className="relative -top-[45%] transform -rotate-90">
+              <div className="relative -top-[42%] transform -rotate-90">
                 <span>{name}</span>
               </div>
             </div>
