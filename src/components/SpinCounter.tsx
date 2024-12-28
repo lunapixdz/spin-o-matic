@@ -1,53 +1,65 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
-
-const GLOBAL_SPINS_KEY = 'wheelspinGlobalCount';
 
 const SpinCounter = () => {
   const [localSpins, setLocalSpins] = useState(0);
-  const [globalSpins, setGlobalSpins] = useState(0);
   const { toast } = useToast();
 
+  const { data: globalSpins, isLoading, error } = useQuery({
+    queryKey: ['spinCount'],
+    queryFn: async () => {
+      try {
+        // Using a more specific namespace for the counter
+        const response = await fetch('https://api.countapi.xyz/hit/wheelspin-counter/visits');
+        if (!response.ok) {
+          throw new Error('Failed to fetch counter data');
+        }
+        const data = await response.json();
+        return data.value;
+      } catch (err) {
+        console.error('Counter API Error:', err);
+        throw err;
+      }
+    },
+    retry: 3,
+    meta: {
+      onError: () => {
+        toast({
+          title: "Unable to load global spin count",
+          description: "Please try again later",
+          variant: "destructive",
+        });
+      },
+    },
+  });
+
   useEffect(() => {
-    // Load local spins
     const stored = localStorage.getItem('wheelspinCount');
     if (stored) {
       setLocalSpins(parseInt(stored));
     }
 
-    // Load global spins
-    const storedGlobal = localStorage.getItem(GLOBAL_SPINS_KEY);
-    if (storedGlobal) {
-      setGlobalSpins(parseInt(storedGlobal));
-    }
-
-    // Listen for storage events to update both counters
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'wheelspinCount') {
-        const newCount = e.newValue;
-        if (newCount) {
-          setLocalSpins(parseInt(newCount));
-        }
-      }
-      if (e.key === GLOBAL_SPINS_KEY) {
-        const newGlobalCount = e.newValue;
-        if (newGlobalCount) {
-          setGlobalSpins(parseInt(newGlobalCount));
-        }
+    // Listen for storage events to update the counter
+    const handleStorageChange = () => {
+      const newCount = localStorage.getItem('wheelspinCount');
+      if (newCount) {
+        setLocalSpins(parseInt(newCount));
       }
     };
 
-    // Subscribe to storage events
     window.addEventListener('storage', handleStorageChange);
-
-    // Cleanup
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   return (
     <div className="text-center space-y-2 mt-8 mb-16">
       <p className="text-lg font-semibold">
-        Total Spins: {globalSpins.toLocaleString()}
+        {error ? (
+          "Unable to load global spin count"
+        ) : (
+          <>Total Spins by All Users: {isLoading ? '...' : globalSpins?.toLocaleString() || 0}</>
+        )}
       </p>
       <p className="text-sm text-gray-600">
         Your Spins: {localSpins}
