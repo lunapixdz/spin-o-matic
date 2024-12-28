@@ -31,8 +31,8 @@ const SpinCounter = () => {
           <a href="https://www.easycounter.com/">
             <img
               src="https://www.easycounter.com/counter.php?lunapix"
-              border="0"
               alt="Website Hit Counter"
+              style={{ border: '0' }}
             />
           </a>
         </div>
