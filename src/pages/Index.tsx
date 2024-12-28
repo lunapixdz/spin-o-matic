@@ -57,6 +57,10 @@ const Index = () => {
     const currentCount = parseInt(localStorage.getItem('wheelspinCount') || '0');
     localStorage.setItem('wheelspinCount', (currentCount + 1).toString());
     
+    // Increment EasyCounter by loading the image
+    const img = new Image();
+    img.src = "https://www.easycounter.com/counter.php?lunapix";
+    
     // Dispatch storage event for counter updates
     const event = new Event('storage');
     window.dispatchEvent(event);

@@ -1,38 +1,9 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
 
 const SpinCounter = () => {
   const [localSpins, setLocalSpins] = useState(0);
   const { toast } = useToast();
-
-  const { data: globalSpins, isLoading, error } = useQuery({
-    queryKey: ['spinCount'],
-    queryFn: async () => {
-      try {
-        // Using a more specific namespace for the counter
-        const response = await fetch('https://api.countapi.xyz/hit/wheelspin-counter/visits');
-        if (!response.ok) {
-          throw new Error('Failed to fetch counter data');
-        }
-        const data = await response.json();
-        return data.value;
-      } catch (err) {
-        console.error('Counter API Error:', err);
-        throw err;
-      }
-    },
-    retry: 3,
-    meta: {
-      onError: () => {
-        toast({
-          title: "Unable to load global spin count",
-          description: "Please try again later",
-          variant: "destructive",
-        });
-      },
-    },
-  });
 
   useEffect(() => {
     const stored = localStorage.getItem('wheelspinCount');
@@ -54,13 +25,18 @@ const SpinCounter = () => {
 
   return (
     <div className="text-center space-y-2 mt-8 mb-16">
-      <p className="text-lg font-semibold">
-        {error ? (
-          "Unable to load global spin count"
-        ) : (
-          <>Total Spins by All Users: {isLoading ? '...' : globalSpins?.toLocaleString() || 0}</>
-        )}
-      </p>
+      <div className="flex flex-col items-center justify-center gap-2">
+        <p className="text-lg font-semibold">Total Spins by All Users:</p>
+        <div>
+          <a href="https://www.easycounter.com/">
+            <img
+              src="https://www.easycounter.com/counter.php?lunapix"
+              border="0"
+              alt="Website Hit Counter"
+            />
+          </a>
+        </div>
+      </div>
       <p className="text-sm text-gray-600">
         Your Spins: {localSpins}
       </p>
