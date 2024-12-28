@@ -26,6 +26,8 @@ const INITIAL_NAMES = [
   "David Kim",
 ];
 
+const GLOBAL_SPINS_KEY = 'wheelspinGlobalCount';
+
 const Index = () => {
   const [names, setNames] = useState<string[]>(INITIAL_NAMES);
   const [winner, setWinner] = useState<string | null>(null);
@@ -51,9 +53,15 @@ const Index = () => {
     }
     setWinnerMessage(mode === "elimination" && names.length > 2 ? "Eliminated!" : "We Have a Winner!");
     
+    // Increment local spins counter
     const currentCount = parseInt(localStorage.getItem('wheelspinCount') || '0');
     localStorage.setItem('wheelspinCount', (currentCount + 1).toString());
     
+    // Increment global spins counter
+    const currentGlobalCount = parseInt(localStorage.getItem(GLOBAL_SPINS_KEY) || '0');
+    localStorage.setItem(GLOBAL_SPINS_KEY, (currentGlobalCount + 1).toString());
+    
+    // Dispatch storage event for counter updates
     const event = new Event('storage');
     window.dispatchEvent(event);
   };
